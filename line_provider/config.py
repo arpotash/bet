@@ -21,4 +21,5 @@ class Settings(BaseModel):
     db_name: Optional[str] = os.getenv("DB_NAME")
     db_uri: Optional[str] = f"postgres://{db_user}:{db_password}@{db_host}/{db_name}"
 
+
 settings = Settings()

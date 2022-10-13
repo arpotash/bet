@@ -1,7 +1,7 @@
 from pydantic import BaseModel, Field
-from tortoise.contrib.pydantic import pydantic_model_creator
 
 from line_provider.models import Event, EventStatus
+from tortoise.contrib.pydantic import pydantic_model_creator
 
 
 class EventChangeSuccess(BaseModel):

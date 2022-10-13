@@ -1,7 +1,12 @@
 from fastapi import APIRouter, status, HTTPException
 from line_provider.models import Event
-from line_provider.schemas import UnavailableService, event_pydantic_model, EventNotFound, EventChangeSuccess, \
-    StatusNotFound
+from line_provider.schemas import (
+    UnavailableService,
+    event_pydantic_model,
+    EventNotFound,
+    EventChangeSuccess,
+    StatusNotFound,
+)
 
 
 event_router = APIRouter(prefix="", tags=["event"])
@@ -49,14 +54,14 @@ async def get_event(uuid: str):
     responses={
         status.HTTP_404_NOT_FOUND: {"model": EventNotFound},
         status.HTTP_503_SERVICE_UNAVAILABLE: {"model": UnavailableService},
-    }
+    },
 )
 async def change_ratio(uuid: str, ratio: float):
     event = await Event.get_or_none(uuid=uuid)
     if not event:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail=EventNotFound(message="Event not found", uuid=uuid)
+            detail=EventNotFound(message="Event not found", uuid=uuid),
         )
     event.ratio = ratio
     await event.save()
@@ -92,7 +97,7 @@ async def event_get_status(event_uuid: str):
     if not event:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail=EventNotFound(message="Event not found", uuid=event_uuid)
+            detail=EventNotFound(message="Event not found", uuid=event_uuid),
         )
     return event.status
 
@@ -111,12 +116,8 @@ async def event_change_status(event_uuid: str, new_status: int):
     if not event:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail=EventNotFound(message="Event not found", uuid=event_uuid)
+            detail=EventNotFound(message="Event not found", uuid=event_uuid),
         )
     event.status = new_status
     await event.save()
-    return EventChangeSuccess(
-        message="Status has been changed",
-        status=new_status
-    )
-
+    return EventChangeSuccess(message="Status has been changed", status=new_status)
