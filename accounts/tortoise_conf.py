@@ -1,0 +1,11 @@
+from accounts.config import settings
+
+TORTOISE_ORM = {
+    "connections": {"default": settings.db_uri},
+    "apps": {
+        "models": {
+            "models": ["accounts.models", "aerich.models"],
+            "default_connection": "default",
+        },
+    },
+}
