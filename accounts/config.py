@@ -1,8 +1,9 @@
 import os
 from typing import Optional
 
-from fastapi_mail import ConnectionConfig
 from pydantic import BaseModel
+
+from fastapi_mail import ConnectionConfig
 
 
 class Settings(BaseModel):

@@ -1,20 +1,21 @@
 import random
-from datetime import datetime, timezone, timedelta
+from datetime import datetime, timedelta, timezone
+from hashlib import sha256
+from typing import Dict, Optional, Tuple, Union
+
 import bcrypt
+import jwt
+from fastapi import BackgroundTasks, HTTPException, status
+
+from accounts.config import email_config, settings
+from accounts.models import User
+from accounts.routers import logger
 from fastapi_mail import FastMail, MessageSchema
 from tortoise.exceptions import DoesNotExist
 
-from accounts.models import User
-from typing import Dict, Optional, Tuple, Union
-from hashlib import sha256
-import jwt
-from fastapi import BackgroundTasks, HTTPException, status
-from accounts.config import email_config, settings
-from accounts.routers import logger
-
 
 async def send_verification_message_background(
-        background_tasks: BackgroundTasks, email: str, token: str
+    background_tasks: BackgroundTasks, email: str, token: str
 ) -> None:
     """
     Отправка верификационного письма на почту

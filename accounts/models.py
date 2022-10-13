@@ -1,5 +1,6 @@
 import datetime
 import uuid
+
 from tortoise import fields
 from tortoise.models import Model
 
@@ -8,6 +9,7 @@ class User(Model):
     """
     User model
     """
+
     id = fields.UUIDField(pk=True, default=uuid.uuid4())
     salt = fields.CharField(max_length=128, null=False)
     created = fields.DatetimeField(auto_now_add=True)

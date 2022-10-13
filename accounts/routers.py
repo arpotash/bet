@@ -1,22 +1,19 @@
 import uuid
-from typing import Union, Dict, Any
+from typing import Any, Dict, Union
 
 from fastapi import APIRouter, BackgroundTasks, HTTPException, Request, status
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from pydantic import ValidationError
-from tortoise.expressions import Q
 
 from accounts.logger import get_logger
 from accounts.models import User
-from accounts.schemas import LoginSuccess, UserLogin, UserRegister, user_pydantic_model
-from accounts.utils import (
-    generate_hashed_password,
-    generate_jwt_token,
-    generate_verify_token,
-    send_verification_message_background,
-    verify_token,
-)
+from accounts.schemas import (LoginSuccess, UserLogin, UserRegister,
+                              user_pydantic_model)
+from accounts.utils import (generate_hashed_password, generate_jwt_token,
+                            generate_verify_token,
+                            send_verification_message_background, verify_token)
+from tortoise.expressions import Q
 
 auth_router = APIRouter(prefix="", tags=["auth"])
 logger = get_logger("Auth")

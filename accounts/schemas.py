@@ -2,6 +2,7 @@ import string
 from typing import Optional
 
 from pydantic import BaseModel, EmailStr, validator
+
 from tortoise.contrib.pydantic import pydantic_model_creator
 
 from .models import User
