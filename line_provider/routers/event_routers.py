@@ -1,11 +1,12 @@
 from fastapi import APIRouter, status, HTTPException
-from line_provider.models import Event
-from line_provider.schemas import (
+from models import Event
+from schemas import (
     UnavailableService,
     event_pydantic_model,
     EventNotFound,
     EventChangeSuccess,
     StatusNotFound,
+    EventCreate
 )
 
 
@@ -30,7 +31,7 @@ async def get_events():
         status.HTTP_503_SERVICE_UNAVAILABLE: {"model": UnavailableService},
     },
 )
-async def create_event(event: event_pydantic_model):
+async def create_event(event: EventCreate):
     event_object = await Event.create(**event.dict())
     return await event_pydantic_model.from_tortoise_orm(event_object)
 

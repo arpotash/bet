@@ -1,6 +1,9 @@
-from pydantic import BaseModel, Field
+import datetime
 
-from line_provider.models import Event, EventStatus
+from pydantic import BaseModel
+from pydantic.fields import Field
+
+from models import Event, EventStatus
 from tortoise.contrib.pydantic import pydantic_model_creator
 
 
@@ -27,5 +30,10 @@ class EventNotFound(BaseModel):
     message: str = Field("Event not found")
 
 
+class EventCreate(BaseModel):
+    ratio: float = Field(example=2.00)
+    deadline: datetime.datetime = Field()
+    status: int = Field(example=1)
+
+
 event_pydantic_model = pydantic_model_creator(Event, name="event")
-# status_pydantic_model = pydantic_model_creator(EventStatus, name="status")

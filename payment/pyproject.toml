@@ -1,0 +1,24 @@
+[tool.aerich]
+tortoise_orm = "tortoise_conf.TORTOISE_ORM"
+location = "./migrations"
+src_folder = "./."
+
+[tool.poetry]
+name = "payment"
+version = "0.1.0"
+description = ""
+authors = ["Артём Поташов <a.potashov@region1.ru>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "^0.109.0"
+aerich = "^0.7.2"
+uvicorn = "^0.25.0"
+tortoise-orm = "^0.20.0"
+asyncpg = "^0.29.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

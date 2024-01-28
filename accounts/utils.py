@@ -9,7 +9,7 @@ from fastapi import BackgroundTasks, HTTPException, status
 
 from accounts.config import email_config, settings
 from accounts.models import User
-from accounts.routers import logger
+# from accounts.routers.auth import logger
 from fastapi_mail import FastMail, MessageSchema
 from tortoise.exceptions import DoesNotExist
 
@@ -59,7 +59,7 @@ def generate_jwt_token(username: str) -> Dict[str, str]:
     """
     access_token = jwt.encode(
         {
-            "username": username,
+            "email": username,
             "count": random.random(),
             "exp": datetime.now(timezone.utc) + timedelta(hours=1),
         },
@@ -68,7 +68,7 @@ def generate_jwt_token(username: str) -> Dict[str, str]:
     )
     refresh_token = jwt.encode(
         {
-            "username": username,
+            "email": username,
             "count": random.random(),
             "exp": datetime.now(timezone.utc) + timedelta(days=14),
         },
@@ -120,7 +120,7 @@ async def verify_token(
         user = await User.get(username=payload.get("user"))
         return user
     except DoesNotExist as e:
-        logger.error(e)
+        # logger.error(e)
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid token",

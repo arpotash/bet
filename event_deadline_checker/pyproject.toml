@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "event-deadline-checker"
+version = "0.1.0"
+description = ""
+authors = ["Артём Поташов <a.potashov@region1.ru>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "^0.109.0"
+aiokafka = "^0.10.0"
+tortoise-orm = "^0.20.0"
+httpx = "^0.26.0"
+aerich = "^0.7.2"
+asyncpg = "^0.29.0"
+
+
+
+[tool.aerich]
+tortoise_orm = "tortoise_conf.TORTOISE_ORM"
+location = "./migrations"
+src_folder = "./."
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
