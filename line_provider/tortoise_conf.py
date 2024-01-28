@@ -1,4 +1,4 @@
-from line_provider.config import settings
+from config import settings
 
 TORTOISE_ORM = {
     "connections": {"default": settings.db_uri},

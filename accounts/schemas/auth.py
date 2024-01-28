@@ -1,11 +1,11 @@
 import string
 from typing import Optional
 
-from pydantic import BaseModel, EmailStr, validator
+from pydantic import BaseModel, EmailStr, field_validator, FieldValidationInfo
 
 from tortoise.contrib.pydantic import pydantic_model_creator
 
-from .models import User
+from accounts.models import User
 
 
 class UserAuth(BaseModel):
@@ -17,12 +17,13 @@ class UserRegister(UserAuth):
     first_name: str
     username: str
 
-    @validator("password")
+    @field_validator("password", mode="before")
     def password_length(cls, instance):
         if len(instance) < 8:
             raise ValueError("Пароль должен содержать минимум 8 символов")
+        return instance
 
-    @validator("password")
+    @field_validator("password", mode="before")
     def password_complexity(cls, instance):
         if not any(sym for sym in instance if sym in string.ascii_letters):
             raise ValueError("Пароль должен содержать минимум 1 символ" "(a-z, A-Z)")
